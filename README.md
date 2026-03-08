@@ -268,7 +268,3 @@ http://localhost:8080
 ```
 
 ---
-
-# 👨‍💻 Author
-
-Built as part of BitLab — a browser-based hardware & embedded execution platform.
