@@ -73,19 +73,19 @@ public class ExecutionService {
         // ================= QNX =================
         if (request.getLanguage().equalsIgnoreCase("qnx")) {
 
-            String jobId = UUID.randomUUID().toString();
+    String jobId = UUID.randomUUID().toString();
 
-            sqsJobService.sendJob(
-                jobId,
-                "qnx",
-                request.getDesignCode()
-            );
+    sqsJobService.sendJob(
+            jobId,
+            "qnx",
+            request.getDesignCode()
+    );
 
-        return ExecutionResponse.builder()
-                .status("queued")
-                .jobId(jobId)
-                .build();
-        }
+    return QueueExecutionResponse.builder()
+            .status("queued")
+            .jobId(jobId)
+            .build();
+}
 
         throw new RuntimeException("Invalid language");
     }
