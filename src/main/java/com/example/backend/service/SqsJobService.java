@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.model.SendMessageRequest;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 @RequiredArgsConstructor
@@ -14,15 +15,18 @@ public class SqsJobService {
     private final String queueUrl =
             "https://sqs.us-east-2.amazonaws.com/160927904719/code-execution-queue";
 
-    public void sendJob(String jobId, String language, String code) {
+    private final ObjectMapper mapper = new ObjectMapper();
 
-        String message = String.format("""
-        {
-            "jobId":"%s",
-            "language":"%s",
-            "code":"%s"
-        }
-        """, jobId, language, code.replace("\"", "\\\""));
+public void sendJob(String jobId, String language, String code) {
+
+    try {
+
+        Map<String, String> payload = new HashMap<>();
+        payload.put("jobId", jobId);
+        payload.put("language", language);
+        payload.put("code", code);
+
+        String message = mapper.writeValueAsString(payload);
 
         SendMessageRequest request = SendMessageRequest.builder()
                 .queueUrl(queueUrl)
@@ -30,5 +34,9 @@ public class SqsJobService {
                 .build();
 
         sqsClient.sendMessage(request);
+
+    } catch (Exception e) {
+        throw new RuntimeException(e);
     }
+}
 }
