@@ -16,7 +16,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ExecutionService {
 
-    public ExecutionResponse execute(ExecutionRequest request) throws Exception {
+    private final SqsJobService sqsJobService;
+
+    public Object execute(ExecutionRequest request) throws Exception {
 
         String workDir = "workspace/" + UUID.randomUUID();
         File dir = new File(workDir);
