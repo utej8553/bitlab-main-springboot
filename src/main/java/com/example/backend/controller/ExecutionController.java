@@ -14,7 +14,7 @@ public class ExecutionController {
     private final ExecutionService executionService;
 
     @PostMapping
-    public ExecutionResponse execute(@RequestBody ExecutionRequest request) throws Exception {
+    public Object execute(@RequestBody ExecutionRequest request) throws Exception {
         return executionService.execute(request);
     }
 }
