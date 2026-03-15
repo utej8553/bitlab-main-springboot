@@ -6,6 +6,7 @@ import com.example.backend.util.ShellExecutor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.example.backend.dto.QueueExecutionResponse;
+import com.example.backend.service.SqsJobService;
 
 import java.io.File;
 import java.io.FileWriter;
